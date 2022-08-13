@@ -1,14 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:footballapp/Football_Work/All_Leagues_Page.dart';
+import 'package:footballapp/Football_Work/Favorite_Page.dart';
 import 'package:footballapp/Football_Work/Statistics_Page.dart';
+import 'package:footballapp/Football_Work/fixture_page.dart';
+import 'package:footballapp/Football_Work/football_main_page.dart';
 import 'package:footballapp/widgets/Listtile_widget.dart';
 import '../Football_Work/login_page.dart';
+import '../global.dart';
 
 
 class My_Drawer extends StatelessWidget {
-  const My_Drawer({Key? key}) : super(key: key);
+   My_Drawer({Key? key}) : super(key: key);
 
   @override
+
+
   Widget build(BuildContext context) {
     return Drawer(
       //backgroundColor: Colors.white,
@@ -79,27 +89,76 @@ class My_Drawer extends StatelessWidget {
             listTile1(
               icons:const Icon(Icons.live_tv,
                 color: Colors.amber,),
-              title:"Live Matches",
-              onPress: (){//Navigator.push(context, MaterialPageRoute(builder:(_)=>LoginPage()));
-              },),
+              title:"Scoreboard",
+              onPress: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FootballMainPage()));
+
+
+              }),
 
             listTile1(
               icons:const  Icon(CupertinoIcons.calendar,
                 color: Colors.amber,),
-              title:"Fixture",
-              onPress: (){//Navigator.push(context, MaterialPageRoute(builder:(_)=>LoginPage()));
+              title:"Schedule",
+              onPress:  (){
+                if(currentFirebaseUser == null)
+                {
+                  Fluttertoast.showToast(
+                      msg: "Please Login",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 2,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                }
+                else
+                {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Fixture_Page()));
+                }
               },),
             listTile1(
               icons:const  Icon(Icons.favorite,
                 color: Colors.amber,),
-              title:"Favorite",
-              onPress: (){//Navigator.push(context, MaterialPageRoute(builder:(_)=>LoginPage()));
+              title:"Subscribe",
+              onPress: (){if(currentFirebaseUser == null)
+              {
+                Fluttertoast.showToast(
+                    msg: "Please Login",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 2,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }
+              else
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Favorite_page()));
+              }
               },),
             listTile1(
               icons:const  Icon (CupertinoIcons.sportscourt_fill,
                 color: Colors.amber,),
-              title:"Leagues",
-              onPress: (){Navigator.push(context, MaterialPageRoute(builder:(_)=>Statistic_Page()));
+              title:"Leagues List",
+              onPress: (){if(currentFirebaseUser == null)
+              {
+                Fluttertoast.showToast(
+                    msg: "Please Login",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 2,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }
+              else
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => All_Leagues()));
+              }
               },),
             const Divider (
               thickness: 1,

@@ -27,7 +27,7 @@ class Text_Field extends StatefulWidget {
         this.check = false,
         this.inputAction,
         this.focusNode,
-        this.maxLines
+        this.maxLines, required Null Function(dynamic value) onChanged
 
       });
 
